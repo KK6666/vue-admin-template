@@ -4,10 +4,50 @@
     <div class="content">
       <el-table style="width: 100%" :data="tableData" border>
         <el-table-column label="Date" prop="date"> </el-table-column>
-        <el-table-column label="Name" prop="name"> </el-table-column>
+        <el-table-column label="Name" prop="name">
+          <template slot="header" slot-scope="scope">
+            <!-- 
+              表头组件说明：
+              headerName-表头名
+              scope-当前列的scope
+              filterClick-查询点击
+              resetClick-重置点击
+              upClick-向上排序点击
+              downClick-向下排序点击
+              clearNum-通过该变该数值，触发组件内筛选排序状态清空
+             -->
+            <TableHeader
+              headerName="姓名"
+              :scope="scope"
+              :clearNum="clearNum"
+              @filterClick="filterClick(scope)"
+              @resetClick="resetClick(scope)"
+              @upClick="upClick(scope)"
+              @downClick="downClick(scope)"
+            ></TableHeader>
+          </template>
+        </el-table-column>
         <el-table-column prop="name">
           <template slot="header" slot-scope="scope">
-            <TableHeader :scope="scope"></TableHeader>
+            <!-- 
+              表头组件说明：
+              headerName-表头名
+              scope-当前列的scope
+              filterClick-查询点击
+              resetClick-重置点击
+              upClick-向上排序点击
+              downClick-向下排序点击
+              clearNum-通过该变该数值，触发组件内筛选排序状态清空
+             -->
+            <TableHeader
+              headerName="搜索"
+              :scope="scope"
+              :clearNum="clearNum"
+              @filterClick="filterClick(scope)"
+              @resetClick="resetClick(scope)"
+              @upClick="upClick(scope)"
+              @downClick="downClick(scope)"
+            ></TableHeader>
           </template>
         </el-table-column>
       </el-table>
@@ -45,11 +85,11 @@ export default {
           address: "上海市普陀区金沙江路 1516 弄"
         }
       ],
-      search: ""
+      clearNum: 0
     };
   },
   methods: {
-    searchClick(scope) {
+    filterClick(scope) {
       console.log(scope);
       // console.log(row);
     },
@@ -57,13 +97,13 @@ export default {
       console.log(scope);
       // console.log(row);
     },
-
-    /////////////////////////////////////////
-    handleEdit(index, row) {
-      console.log(index, row);
+    upClick(scope) {
+      console.log(scope);
+      // console.log(row);
     },
-    handleDelete(index, row) {
-      console.log(index, row);
+    downClick(scope) {
+      console.log(scope);
+      // console.log(row);
     }
   }
 };
