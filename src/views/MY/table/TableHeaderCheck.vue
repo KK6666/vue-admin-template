@@ -4,7 +4,7 @@
     <el-popover
       class="filter_popover"
       placement="bottom"
-      width="100"
+      width="150"
       trigger="click"
       v-model="visible"
     >
@@ -12,7 +12,28 @@
         <i class="el-icon-arrow-down" style="margin:0 5px;cursor: pointer;"></i>
       </span>
       <div class="filter">
-        <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
+        <!-- el-scrollbar必须给定高度 -->
+        <el-scrollbar style="">
+          <el-checkbox
+            :indeterminate="isIndeterminate"
+            v-model="checkAll"
+            @change="handleCheckAllChange"
+            >全选</el-checkbox
+          >
+          <el-checkbox-group
+            v-model="checkedOptions"
+            @change="handleCheckedOptionsChange"
+          >
+            <el-checkbox
+              v-for="option in options"
+              :label="option"
+              :key="option"
+              style="display:block;"
+              >{{ option }}
+            </el-checkbox>
+          </el-checkbox-group>
+        </el-scrollbar>
+
         <div class="click_btn" style="padding-top:5px;">
           <span
             style="float:right;cursor: pointer;font-size:12px;color:'#606266'"
@@ -52,13 +73,34 @@ export default {
   data() {
     return {
       search: "",
-      visible: false,
-      isForbidClick: true
+      visible: false, //是否显示el-popovper
+      isForbidClick: true,
+      checkedOptions: ["上海", "北京"],
+      options: [
+        "上海",
+        "北京",
+        "广州",
+        "深圳",
+        "上海6",
+        "北京11",
+        "广州11",
+        "深圳11",
+        "上海11",
+        "北京2",
+        "广州2",
+        "深圳2",
+        "上海2",
+        "北京3",
+        "广州3",
+        "深圳3"
+      ],
+      isIndeterminate: true,
+      checkAll: false
     };
   },
   watch: {
     clearNum: function() {
-      this.search = "";
+      this.checkedOptions = [];
       this.$refs.up.style.color = "";
       this.$refs.down.style.color = "";
     },
@@ -76,24 +118,39 @@ export default {
     },
     //重置点击
     resetClick() {
-      this.search = "";
       this.$emit("resetClick", this.scope);
       //关闭popover
       this.visible = false;
+      this.checkedOptions = [];
+      this.handleCheckedOptionsChange(this.checkedOptions);
     },
     //向上排序点击
     upClick() {
       this.$emit("upClick", this.scope);
       //排序icon颜色变化
       this.$refs.up.style.color = "rgb(64, 158, 255)";
-      this.$refs.down.style.color = "";
+      setTimeout(() => {
+        this.$refs.up.style.color = "";
+      }, 500);
     },
     //向下排序点击
     downClick() {
       this.$emit("downClick", this.scope);
       //排序icon颜色变化
       this.$refs.down.style.color = "rgb(64, 158, 255)";
-      this.$refs.up.style.color = "";
+      setTimeout(() => {
+        this.$refs.down.style.color = "";
+      }, 500);
+    },
+    handleCheckAllChange(val) {
+      this.checkedOptions = val ? this.options : [];
+      this.isIndeterminate = false;
+    },
+    handleCheckedOptionsChange(value) {
+      let checkedCount = value.length;
+      this.checkAll = checkedCount === this.options.length;
+      this.isIndeterminate =
+        checkedCount > 0 && checkedCount < this.options.length;
     }
   }
 };
@@ -116,6 +173,18 @@ export default {
       height: 8px;
       line-height: 8px;
       cursor: pointer;
+    }
+  }
+}
+</style>
+
+<style lang="scss">
+.filter {
+  .el-scrollbar {
+    height: 100px;
+    .el-scrollbar__wrap {
+      overflow-y: scroll;
+      overflow-x: hidden;
     }
   }
 }

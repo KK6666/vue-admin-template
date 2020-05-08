@@ -16,7 +16,7 @@
               downClick-向下排序点击
               clearNum-通过该变该数值，触发组件内筛选排序状态清空
              -->
-            <TableHeader
+            <TableHeaderInput
               headerName="姓名"
               :scope="scope"
               :clearNum="clearNum"
@@ -24,7 +24,7 @@
               @resetClick="resetClick(scope)"
               @upClick="upClick(scope)"
               @downClick="downClick(scope)"
-            ></TableHeader>
+            ></TableHeaderInput>
           </template>
         </el-table-column>
         <el-table-column prop="name">
@@ -39,7 +39,7 @@
               downClick-向下排序点击
               clearNum-通过该变该数值，触发组件内筛选排序状态清空
              -->
-            <TableHeader
+            <TableHeaderCheck
               headerName="搜索"
               :scope="scope"
               :clearNum="clearNum"
@@ -47,7 +47,7 @@
               @resetClick="resetClick(scope)"
               @upClick="upClick(scope)"
               @downClick="downClick(scope)"
-            ></TableHeader>
+            ></TableHeaderCheck>
           </template>
         </el-table-column>
       </el-table>
@@ -56,10 +56,12 @@
 </template>
 
 <script>
-import TableHeader from "./table_header.vue";
+import TableHeaderInput from "./TableHeaderInput.vue";
+import TableHeaderCheck from "./TableHeaderCheck.vue";
 export default {
   components: {
-    TableHeader
+    TableHeaderInput,
+    TableHeaderCheck
   },
   data() {
     return {
