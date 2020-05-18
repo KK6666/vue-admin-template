@@ -1,6 +1,8 @@
 <template>
   <div class="table_header">
-    <span class="heeader_name">{{ headerName }}</span>
+    <span class="heeader_name" :class="isActiveFilter ? 'active' : ''">{{
+      headerName
+    }}</span>
     <el-popover
       class="filter_popover"
       placement="bottom"
@@ -53,7 +55,8 @@ export default {
     return {
       search: "",
       visible: false,
-      isForbidClick: true
+      isForbidClick: true,
+      isActiveFilter: false //判断当前是否为筛选激活装填
     };
   },
   watch: {
@@ -73,6 +76,7 @@ export default {
       this.$emit("filterClick", this.scope);
       //关闭popover
       this.visible = false;
+      this.isActiveFilter = true;
     },
     //重置点击
     resetClick() {
@@ -80,24 +84,25 @@ export default {
       this.$emit("resetClick", this.scope);
       //关闭popover
       this.visible = false;
+      this.isActiveFilter = false;
     },
     //向上排序点击
     upClick() {
       this.$emit("upClick", this.scope);
       //排序icon颜色变化
       this.$refs.up.style.color = "rgb(64, 158, 255)";
-      setTimeout(()=>{
+      setTimeout(() => {
         this.$refs.up.style.color = "";
-      },500)
+      }, 500);
     },
     //向下排序点击
     downClick() {
       this.$emit("downClick", this.scope);
       //排序icon颜色变化
       this.$refs.down.style.color = "rgb(64, 158, 255)";
-       setTimeout(()=>{
+      setTimeout(() => {
         this.$refs.down.style.color = "";
-      },500)
+      }, 500);
     }
   }
 };
@@ -109,6 +114,9 @@ export default {
   align-items: center;
   .heeader_name {
     font-size: 14px;
+    &.active {
+      color: rgb(64, 158, 255);
+    }
   }
   .sort {
     height: 10px;

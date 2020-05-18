@@ -1,6 +1,8 @@
 <template>
   <div class="table_header">
-    <span class="heeader_name">{{ headerName }}</span>
+    <span class="heeader_name" :class="isActiveFilter ? 'active' : ''">{{
+      headerName
+    }}</span>
     <el-popover
       class="filter_popover"
       placement="bottom"
@@ -95,7 +97,8 @@ export default {
         "深圳3"
       ],
       isIndeterminate: true,
-      checkAll: false
+      checkAll: false,
+      isActiveFilter: false //判断当前是否为筛选激活装填
     };
   },
   watch: {
@@ -115,12 +118,14 @@ export default {
       this.$emit("filterClick", this.scope);
       //关闭popover
       this.visible = false;
+      this.isActiveFilter = true;
     },
     //重置点击
     resetClick() {
       this.$emit("resetClick", this.scope);
       //关闭popover
       this.visible = false;
+      this.isActiveFilter = false;
       this.checkedOptions = [];
       this.handleCheckedOptionsChange(this.checkedOptions);
     },
@@ -162,6 +167,9 @@ export default {
   align-items: center;
   .heeader_name {
     font-size: 14px;
+    &.active {
+      color: rgb(64, 158, 255);
+    }
   }
   .sort {
     height: 10px;
