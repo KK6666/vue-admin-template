@@ -17,13 +17,13 @@
               clearNum-通过该变该数值，触发组件内筛选排序状态清空
              -->
             <TableHeaderInput
-              headerName="姓名"
+              headerName="输入框"
               :scope="scope"
               :clearNum="clearNum"
-              @filterClick="filterClick(scope)"
-              @resetClick="resetClick(scope)"
-              @upClick="upClick(scope)"
-              @downClick="downClick(scope)"
+              @filterClick="filterClick"
+              @resetClick="resetClick"
+              @upClick="upClick"
+              @downClick="downClick"
             ></TableHeaderInput>
           </template>
         </el-table-column>
@@ -40,13 +40,13 @@
               clearNum-通过该变该数值，触发组件内筛选排序状态清空
              -->
             <TableHeaderCheck
-              headerName="搜索"
+              headerName="选择框"
               :scope="scope"
               :clearNum="clearNum"
-              @filterClick="filterClick(scope)"
-              @resetClick="resetClick(scope)"
-              @upClick="upClick(scope)"
-              @downClick="downClick(scope)"
+              @filterClick="filterClick"
+              @resetClick="resetClick"
+              @upClick="upClick"
+              @downClick="downClick"
             ></TableHeaderCheck>
           </template>
         </el-table-column>
@@ -91,10 +91,9 @@ export default {
     };
   },
   methods: {
-    filterClick(scope) {
-      console.log(scope);
-      // console.log(searchKey);
-      // console.log(row);
+    filterClick(data) {
+      // data[0]-scope，data[1]-input或多选框的值
+      console.log(data);
     },
     resetClick(scope) {
       console.log(scope);

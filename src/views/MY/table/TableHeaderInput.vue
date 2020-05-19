@@ -16,21 +16,24 @@
       <div class="filter">
         <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
         <div class="click_btn" style="padding-top:5px;">
-          <span
-            style="float:right;cursor: pointer;font-size:12px;color:'#606266'"
+          <el-button
+            type="text"
+            style="float:right;padding:0;font-size:12px;color:#606266;"
             onmouseover="this.style.color='rgb(64, 158, 255)'"
             onmouseout="this.style.color='#606266'"
             @click="resetClick()"
-            >重置</span
+            >重置</el-button
           >
-          <span
-            style="float:right;margin-right:5px;cursor: pointer;font-size:12px;color:'#606266'"
+          <el-button
+            type="text"
+            style="float:right;padding:0;font-size:12px;color:#606266;margin-right:5px;"
+            :style="{ color: filter_forbid ? '' : '#606266' }"
             onmouseover="this.style.color='rgb(64, 158, 255)'"
             onmouseout="this.style.color='#606266'"
             @click="filterClick()"
+            :disabled="filter_forbid"
+            >查询</el-button
           >
-            查询
-          </span>
         </div>
       </div>
     </el-popover>
@@ -55,8 +58,8 @@ export default {
     return {
       search: "",
       visible: false,
-      isForbidClick: true,
-      isActiveFilter: false //判断当前是否为筛选激活装填
+      isActiveFilter: false, //判断当前是否为筛选激活装填
+      filter_forbid: true
     };
   },
   watch: {
@@ -66,14 +69,14 @@ export default {
       this.$refs.down.style.color = "";
     },
     search: function() {
-      // this.isForbidClick = this.search ? false : true;
+      this.filter_forbid = this.search ? false : true;
     }
   },
   methods: {
     // 查询点击
     filterClick() {
       // console.log(this.scope);
-      this.$emit("filterClick", this.scope);
+      this.$emit("filterClick", [this.scope, this.search]);
       //关闭popover
       this.visible = false;
       this.isActiveFilter = true;

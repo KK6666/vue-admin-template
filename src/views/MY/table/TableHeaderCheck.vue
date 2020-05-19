@@ -14,7 +14,7 @@
         <i class="el-icon-arrow-down" style="margin:0 5px;cursor: pointer;"></i>
       </span>
       <div class="filter">
-        <!-- el-scrollbar必须给定高度 -->
+        <!-- el-scrollbar必须给定固定高度 -->
         <el-scrollbar style="">
           <el-checkbox
             :indeterminate="isIndeterminate"
@@ -37,21 +37,24 @@
         </el-scrollbar>
 
         <div class="click_btn" style="padding-top:5px;">
-          <span
-            style="float:right;cursor: pointer;font-size:12px;color:'#606266'"
+          <el-button
+            type="text"
+            style="float:right;padding:0;font-size:12px;color:#606266;"
             onmouseover="this.style.color='rgb(64, 158, 255)'"
             onmouseout="this.style.color='#606266'"
             @click="resetClick()"
-            >重置</span
+            >重置</el-button
           >
-          <span
-            style="float:right;margin-right:5px;cursor: pointer;font-size:12px;color:'#606266'"
+          <el-button
+            type="text"
+            style="float:right;padding:0;font-size:12px;color:#606266;margin-right:5px;"
+            :style="{ color: filter_forbid ? '' : '#606266' }"
             onmouseover="this.style.color='rgb(64, 158, 255)'"
             onmouseout="this.style.color='#606266'"
             @click="filterClick()"
+            :disabled="filter_forbid"
+            >查询</el-button
           >
-            查询
-          </span>
         </div>
       </div>
     </el-popover>
@@ -74,10 +77,8 @@ export default {
   },
   data() {
     return {
-      search: "",
       visible: false, //是否显示el-popovper
-      isForbidClick: true,
-      checkedOptions: ["上海", "北京"],
+      checkedOptions: [],
       options: [
         "上海",
         "北京",
@@ -96,9 +97,10 @@ export default {
         "广州3",
         "深圳3"
       ],
-      isIndeterminate: true,
+      isIndeterminate: false,
       checkAll: false,
-      isActiveFilter: false //判断当前是否为筛选激活装填
+      isActiveFilter: false, //判断当前是否为筛选激活装填
+      filter_forbid: true
     };
   },
   watch: {
@@ -107,15 +109,18 @@ export default {
       this.$refs.up.style.color = "";
       this.$refs.down.style.color = "";
     },
-    search: function() {
-      // this.isForbidClick = this.search ? false : true;
+    checkedOptions: {
+      handler() {
+        this.filter_forbid = this.checkedOptions.length ? false : true;
+      },
+      deep: true
     }
   },
   methods: {
     // 查询点击
     filterClick() {
       // console.log(this.scope);
-      this.$emit("filterClick", this.scope);
+      this.$emit("filterClick", [this.scope, this.checkedOptions]);
       //关闭popover
       this.visible = false;
       this.isActiveFilter = true;
@@ -189,7 +194,7 @@ export default {
 <style lang="scss">
 .filter {
   .el-scrollbar {
-    height: 100px;
+    height: 150px;
     .el-scrollbar__wrap {
       overflow-y: scroll;
       overflow-x: hidden;
