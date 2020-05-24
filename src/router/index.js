@@ -210,11 +210,11 @@ export const constantRoutes = [{
         }
       },
       {
-        path: 'selectAll',
-        name: 'SelectAll',
-        component: () => import('@/views/MY/selectAll/index'),
+        path: 'elSelect',
+        name: 'elSelect',
+        component: () => import('@/views/MY/elSelect/index'),
         meta: {
-          title: '下拉全选',
+          title: 'el-select',
           icon: 'tree'
         }
       }
