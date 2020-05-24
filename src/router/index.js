@@ -185,27 +185,36 @@ export const constantRoutes = [{
   {
     path: '/MY',
     component: Layout,
-    redirect: '/MY/table',
+    redirect: '/MY/elTable',
     name: 'MY',
     meta: {
       title: 'MY',
       icon: 'MY'
     },
     children: [{
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/MY/table/index'),
+        path: 'elTable',
+        name: 'elTable',
+        component: () => import('@/views/MY/elTable/index'),
         meta: {
-          title: 'Table',
+          title: 'el-table',
           icon: 'table'
         }
       },
       {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
+        path: 'echarts',
+        name: 'Echarts',
+        component: () => import('@/views/MY/echarts/index'),
         meta: {
-          title: 'Tree',
+          title: 'Echarts',
+          icon: 'tree'
+        }
+      },
+      {
+        path: 'selectAll',
+        name: 'SelectAll',
+        component: () => import('@/views/MY/selectAll/index'),
+        meta: {
+          title: '下拉全选',
           icon: 'tree'
         }
       }
