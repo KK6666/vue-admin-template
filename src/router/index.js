@@ -217,6 +217,15 @@ export const constantRoutes = [{
           title: 'el-select',
           icon: 'tree'
         }
+      },
+      {
+        path: 'demo',
+        name: 'demo',
+        component: () => import('@/views/MY/demo/index'),
+        meta: {
+          title: 'demo',
+          icon: 'tree'
+        }
       }
     ]
   },
