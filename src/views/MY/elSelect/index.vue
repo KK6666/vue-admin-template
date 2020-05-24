@@ -4,16 +4,20 @@
       <el-tab-pane label="全选" name="first">
         <SelectAll></SelectAll>
       </el-tab-pane>
-      <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
+      <el-tab-pane label="溢出隐藏" name="second">
+        <RewriteCss></RewriteCss>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 
 <script>
 import SelectAll from "./components/selectAll";
+import RewriteCss from "./components/rewriteCss";
 export default {
   components: {
-    SelectAll
+    SelectAll,
+    RewriteCss
   },
   data() {
     return {
